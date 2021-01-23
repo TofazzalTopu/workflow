@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title> Workflow </title>
+    <meta charset="utf-8">
+    <meta name="context-path" th:content="@{/}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/assets/js/workflow.js}"></script>
+</head>
+<body>
+<div class="content-wrapper">
+
+    <div class="container">
+        <h2>Workflow Form </h2>
+        <div class="form-group right-arrow navbar-right">
+            <h5>
+            </h5>
+        </div>
+        <form id="app" role="form" th:action="@{/workflow/saveResponse}" method="post">
+            <div class="box-body">
+                <div class="row">
+                    <label style="padding-left: 30%; color: green; align-content: center;" th:if="${success}"
+                       th:text="${success}"/>
+                <label style="padding-left: 30%; color: red; align-content: center;" th:if="${error}"
+                       th:text="${error}"/>
+                <label id="labelMessage" style="padding-left: 10%; color: green; align-content: center;" />
+
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="customerOne"> Customer: &nbsp;&nbsp;&nbsp; </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select class="form-control" id="customerOne" th:name="customerOne" onclick="getResponseHistory(this.id);">
+                            <option value="">Select Customer</option>
+                            <option value="10">John Doe</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="customerOne">  &nbsp;&nbsp;&nbsp; </label> <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="button" value="Start Workflow For Customer One" class="btn-primary" onclick="startWorkflowForCustomerOne();"/>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="customerOne">  &nbsp;&nbsp;&nbsp; </label> <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <input type="button" value="View Messages" class="btn-primary" onclick="viewMessageHistoryForCustomerOne();"/>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="customerTwo"> Customer: &nbsp;&nbsp;&nbsp; </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select class="form-control" id="customerTwo" th:name="customerTwo" onclick="getResponseHistory(this.id);">
+                            <option value="">Select Customer</option>
+                            <option value="11">Daniel Christian</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="customerTwo">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label> <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="button" value="Start Workflow For Customer Two" class="btn-primary" onclick="startWorkflowForCustomerTwo();"/>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="customerTwo">  &nbsp;&nbsp;&nbsp; </label> <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="button" value="View Messages" class="btn-primary" onclick="viewMessageHistoryForCustomerTwo();"/>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="customerThree"> Customer: &nbsp;&nbsp;&nbsp; </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select class="form-control" id="customerThree" th:name="customerTwo" onclick="getResponseHistory(this.id);">
+                            <option value="">Select Customer</option>
+                            <option value="12">David</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="customerThree">  &nbsp;&nbsp;&nbsp; </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="button" value="Start Workflow For Customer Three" class="btn-primary" onclick="startWorkflowForCustomerThree();"/>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="customerThree">  &nbsp;&nbsp;&nbsp; </label> <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="button" value="View Messages" class="btn-primary" onclick="viewMessageHistoryForCustomerThree();"/>
+                    </div>
+                </div>
+                <br/>
+                <div class="row col-md-12">
+                    <div id="responseMsgDiv" class="form-group">
+                        <label for="salesManMessageToCustomer"> Sales Man's Message History To The Customer: &nbsp;&nbsp;&nbsp; </label>
+                        <textarea readonly rows="8" name="salesManMessageToCustomer" id="salesManMessageToCustomer" cols="20"
+                                  class="form-control" placeholder="Sales ManMessage To Customer showing here."
+                                  autofocus="autofocus">
+                            </textarea> <br/>
+                    </div>
+                    <div id="responseDiv" class="form-group">
+                        <label for="response"> Customer Response To The Sales Man: &nbsp;&nbsp;&nbsp; </label>
+                        <textarea rows="2" name="response" id="response" cols="30" class="form-control"
+                                      autofocus="autofocus" placeholder="Customer response showing here.">
+                            </textarea>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="customer"> Customer: &nbsp;&nbsp;&nbsp; </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <select class="form-control" id="customer" th:name="customerTwo" onclick="getResponseHistory(this.id);">
+                                <option value="">Select Customer</option>
+                                <option th:each="customer : ${customerList}" th:value="${customer.id}"
+                                        th:text="${customer.name}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="customer"> &nbsp;&nbsp;&nbsp; </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="button" value="Submit Response" class="btn-primary" onclick="saveResponseMessage();"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div id="responseHistoryDiv" class="form-group">
+                        <label for="responseHistory"> Customer Response History To The Sales Man: &nbsp;&nbsp;&nbsp; </label>
+                        <textarea readonly rows="4" name="responseHistory" id="responseHistory" cols="20" class="form-control"
+                                  autofocus="autofocus" placeholder="Please enter your response here.">
+                            </textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
