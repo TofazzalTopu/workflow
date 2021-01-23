@@ -18,6 +18,7 @@
 
 ## Workflow Management Service
 * Project home url: http://localhost:8080/workflow/workflow
+* To See Customer Wise Message: http://localhost:8080/workflow/customerList
 * Select a customer and click on 'Start Workflow For Customer One/Two/Three' button and workflow will started immediately for the selected customer.
 * Different workflow for the different customer will be started when you click on 'Start Workflow..' button.
 * For response select a customer from the dropdown.
