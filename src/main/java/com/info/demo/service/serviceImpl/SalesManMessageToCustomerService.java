@@ -55,7 +55,7 @@ public class SalesManMessageToCustomerService implements SalesManMessageToCustom
             // Fetching message list for the particular stage and stored in stageWiseMessageList
             List<StageWiseMessage> stageWiseMessageList = messageRepository.findByStage(stg);
 
-            // Find the message list for current the customer and stages and stored to messageToCustomerList
+            // Find the message list for current the customer and stages and stored to stageAndCustomerWiseMessageList
             List<SalesManMessageToCustomer> stageAndCustomerWiseMessageList = findByCustomerAndStage(customer, stg);
 
             // Find the customerResponse for the current stages and customer and stored to customerResponse

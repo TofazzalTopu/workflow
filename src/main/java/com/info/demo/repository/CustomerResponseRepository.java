@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface CustomerResponseRepository extends JpaRepository<CustomerResponse, Long> {
     CustomerResponse findByCustomerAndStage(Customer customer, int stage);
-//    List<CustomerResponse> findByCustomerAndStage(Customer customer, int stage);
     List<CustomerResponse> findByCustomer(Customer customer);
     List<CustomerResponse> findByCustomerOrderByStage(Customer customer);
 }

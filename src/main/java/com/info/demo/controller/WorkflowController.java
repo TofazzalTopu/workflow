@@ -27,6 +27,7 @@ import java.util.*;
      will work as RESTFul webservice
 */
 
+@CrossOrigin
 @Controller
 @RequestMapping(value = "/workflow")
 public class WorkflowController {
